@@ -2,12 +2,14 @@ import React from "react";
 
 //include images into your bundle
 import Counter from "./counter.jsx"
+import CounterControls from "./controls.jsx"
 
 //create your first component
-const Home = () => {
+const Home = (props) => {
 	return (
 		<div className="text-center">
-			<Counter seconds={123}/>
+			<Counter seconds={props.seconds}/>
+			<CounterControls/>
 		</div>
 	);
 };
