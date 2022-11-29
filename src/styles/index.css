@@ -52,6 +52,12 @@ body {
     margin: .1em;
 }
 
+.button-active{
+    border: 0.1em solid rgb(72, 255, 0) !important;
+    background-color: rgba(60, 255, 0, 0.418) !important;
+    color: rgb(72, 255, 0) !important;
+}
+
 .counter-controls label {
     display: block;
 }

@@ -15,8 +15,9 @@ var data = {
   count: 0,
   direction: 1,
   running: true,
-  alertTime: 10,
+  alertTime: 0,
   alert: false,
+  countdown : 0
 };
 
 //Event handlers for the counter controls
@@ -27,29 +28,45 @@ const handlers = {
     data.running = true
     data.alert = false
     data.alertTime = 0
+    data.countdown = 0
   },
-  resume() {
-    data.running = true;
-  },
+
   play() {
     data.running = data.running ? false : true;
   },
-  countdown(initialtime) {
-    count = initialtime; // TODO: set the count according to the countdown input
-    data.direction = -1;
+
+  setCountdown(event) {
+    data.countdown = event.target.value;
   },
+
+  countdown(){
+    data.count = parseInt(data.countdown)
+    data.direction = -1
+    data.alert = true
+    data.alertTime = 0
+    data.running = true
+  },
+
+  setAlert(event){
+    data.alertTime = event.target.value
+  },
+
+  alert (){
+    data.alert = data.alert?false:true
+  }
+
 };
-// This is repeated on set interval, this is not needed
-//ReactDOM.render(<Home seconds={0} handlers={handlers} data={data}/>, document.querySelector("#app"));
 
 setInterval(() => {
   ReactDOM.render(
-    <Home seconds={data.count} handlers={handlers} data={data} />,
+    <Home handlers={handlers} data={data} />,
     document.querySelector("#app")
   );
 
-  if (data.count == data.alertTime && data.alertActivated) {
-    window.alert("Alarm! Time Reached");
+  if (data.count == data.alertTime && data.alert) {
+    data.running = false
+    data.alert = false
+    window.alert("Alarm! "+ data.count +" Time Reached");
   }
 
   data.count += data.running ? data.direction : 0;
