@@ -7,9 +7,9 @@ import CounterControls from "./controls.jsx"
 //create your first component
 const Home = (props) => {
 	return (
-		<div className="text-center">
+		<div className="counter-container">
 			<Counter seconds={props.seconds}/>
-			<CounterControls/>
+			<CounterControls handlers={props.handlers} data={props.data}/>
 		</div>
 	);
 };
