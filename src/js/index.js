@@ -10,39 +10,33 @@ import Home from "./component/home.jsx";
 
 //render your react application
 
-
 //Initial counter state
-var data = {
-  count: 0,
-  direction: 1,
-  running: true,
-  alertTime: 0,
-  alert: false,
-  countdown: 0,
-};
-
-let intervalId = setInterval(count, 1000)
+var data = [];
+var intervalId;
 
 
-//Event handlers for the counter controls TODO naming convention please XD
+
+//TODO: when the count down starts changes the inputTime value to 0 but it does not update the timeAlert number input value, this must be fixed.
+
+
+//Event handlers exposed to the counter compnent
 const handlers = {
   reset() {
     data.count = 0;
     data.direction = 1;
-    data.running = true;
     data.alert = false;
     data.alertTime = 0;
-    data.countdown = 0;
+    data.countdown = 10;
+    render();
+    start()
   },
 
   toggleCounting() {
     // data.running = data.running ? false : true;
-    if (data.running) {
-      clearInterval(intervalId)
-      data.running = false;
+    if (data.isRunning) {
+      stop();
     } else {
-      intervalId = setInterval(count ,1000)
-      data.running = true;
+      start();
     }
     render();
   },
@@ -51,13 +45,12 @@ const handlers = {
     data.countdown = event.target.value;
   },
 
-  countdown() {
-    data.count = parseInt(data.countdown);
+  startCountdown() {
+    data.count = parseInt(data.countdown)+1;
     data.direction = -1;
-    data.alert = true;
     data.alertTime = 0;
-    data.running = true;
-    render();
+    data.alert = true;
+    start()
   },
 
   setAlert(event) {
@@ -69,12 +62,12 @@ const handlers = {
     render();
   },
 
-  setBackward() {
+  setBackwardCounting() {
     data.direction = -1;
     render();
   },
 
-  setForward() {
+  setForwardCounting() {
     data.direction = 1;
     render();
   },
@@ -88,13 +81,25 @@ function render() {
 }
 
 function count() {
+  data.count += data.direction;
+
+  render();
+
   if (data.count == data.alertTime && data.alert) {
-    handlers.toggleCounting()
+    handlers.toggleCounting();
     data.alert = false;
     window.alert("Alarm! " + data.count + " Time Reached");
   }
-
-  data.count += data.running ? data.direction : 0;
-
-  render();
 }
+function start() {
+  clearInterval(intervalId);
+  intervalId = setInterval(count, 1000);
+  data.isRunning = true;
+}
+
+function stop() {
+  clearInterval(intervalId);
+  data.isRunning = false;
+}
+
+handlers.reset();

@@ -20,23 +20,23 @@ class Counter extends React.Component {
             <div className="counter-controls">
                     <div className="Countdown-controls">
                         <label htmlFor="countdown-input">Countdown from:</label>
-                        <input type="number" onChange={this.props.handlers.setCountdown} placeholder="Countdown from:" />
-                        <button onClick={this.props.handlers.countdown}>Go!</button>
+                        <input type="number" min="0" onChange={this.props.handlers.setCountdown} placeholder="0" />
+                        <button onClick={this.props.handlers.startCountdown}>Go!</button>
                     </div>
                     <div>
                         <label htmlFor="">Alert at:</label>
-                        <input type="number" onChange={this.props.handlers.setAlert} placeholder="Alert at:" />
+                        <input type="number" placeholder="0" />
                         <button className={this.props.data.alert?"button-active":""} onClick={this.props.handlers.alert}><i className="bi bi-alarm"></i></button>
                     </div>
                     <div>
-                        <button className={(this.props.data.direction == -1)?"button-active":""} onClick={this.props.handlers.setBackward}><i className="bi bi-caret-left"></i></button>
+                        <button className={(this.props.data.direction == -1)?"button-active":""} onClick={this.props.handlers.setBackwardCounting}><i className="bi bi-caret-left"></i></button>
                         <button type="button" name="play-stop" onClick={this.props.handlers.toggleCounting}>
-                            <i className={this.props.data.running ? "bi bi-pause" : "bi bi-play"}></i>
+                            <i className={this.props.data.isRunning ? "bi bi-pause" : "bi bi-play"}></i>
                         </button>
                         <button type="reset" onClick={this.props.handlers.reset}>
                             <i className="bi bi-arrow-clockwise"></i>
                         </button>
-                        <button className={(this.props.data.direction == 1)?"button-active":""} onClick={this.props.handlers.setForward}><i className="bi bi-caret-right"></i></button>
+                        <button className={(this.props.data.direction == 1)?"button-active":""} onClick={this.props.handlers.setForwardCounting}><i className="bi bi-caret-right"></i></button>
                     </div>
                 </div>
             </>
