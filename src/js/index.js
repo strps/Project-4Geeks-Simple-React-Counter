@@ -10,6 +10,7 @@ import Home from "./component/home.jsx";
 
 //render your react application
 
+
 //Initial counter state
 var data = {
   count: 0,
@@ -19,6 +20,9 @@ var data = {
   alert: false,
   countdown: 0,
 };
+
+let intervalId = setInterval(count, 1000)
+
 
 //Event handlers for the counter controls TODO naming convention please XD
 const handlers = {
@@ -31,9 +35,16 @@ const handlers = {
     data.countdown = 0;
   },
 
-  toggleRunning() {
-    data.running = data.running ? false : true;
-    render()
+  toggleCounting() {
+    // data.running = data.running ? false : true;
+    if (data.running) {
+      clearInterval(intervalId)
+      data.running = false;
+    } else {
+      intervalId = setInterval(count ,1000)
+      data.running = true;
+    }
+    render();
   },
 
   setCountdown(event) {
@@ -46,7 +57,7 @@ const handlers = {
     data.alert = true;
     data.alertTime = 0;
     data.running = true;
-    render()
+    render();
   },
 
   setAlert(event) {
@@ -55,17 +66,17 @@ const handlers = {
 
   alert() {
     data.alert = data.alert ? false : true;
-    render()
+    render();
   },
 
   setBackward() {
     data.direction = -1;
-    render()
+    render();
   },
 
   setForward() {
     data.direction = 1;
-    render()
+    render();
   },
 };
 
@@ -76,16 +87,14 @@ function render() {
   );
 }
 
-setInterval(() => {
-  
+function count() {
   if (data.count == data.alertTime && data.alert) {
-    data.running = false;
+    handlers.toggleCounting()
     data.alert = false;
     window.alert("Alarm! " + data.count + " Time Reached");
   }
-  
+
   data.count += data.running ? data.direction : 0;
 
   render();
-
-}, 1000);
+}

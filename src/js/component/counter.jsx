@@ -30,7 +30,7 @@ class Counter extends React.Component {
                     </div>
                     <div>
                         <button className={(this.props.data.direction == -1)?"button-active":""} onClick={this.props.handlers.setBackward}><i className="bi bi-caret-left"></i></button>
-                        <button type="button" name="play-stop" onClick={this.props.handlers.toggleRunning}>
+                        <button type="button" name="play-stop" onClick={this.props.handlers.toggleCounting}>
                             <i className={this.props.data.running ? "bi bi-pause" : "bi bi-play"}></i>
                         </button>
                         <button type="reset" onClick={this.props.handlers.reset}>
