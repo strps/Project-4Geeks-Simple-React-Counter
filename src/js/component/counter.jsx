@@ -29,12 +29,14 @@ class Counter extends React.Component {
                         <button className={this.props.data.alert?"button-active":""} onClick={this.props.handlers.alert}><i className="bi bi-alarm"></i></button>
                     </div>
                     <div>
-                        <button type="button" name="play-stop" onClick={this.props.handlers.play}>
+                        <button className={(this.props.data.direction == -1)?"button-active":""} onClick={this.props.handlers.setBackward}><i className="bi bi-caret-left"></i></button>
+                        <button type="button" name="play-stop" onClick={this.props.handlers.toggleRunning}>
                             <i className={this.props.data.running ? "bi bi-pause" : "bi bi-play"}></i>
                         </button>
                         <button type="reset" onClick={this.props.handlers.reset}>
                             <i className="bi bi-arrow-clockwise"></i>
                         </button>
+                        <button className={(this.props.data.direction == 1)?"button-active":""} onClick={this.props.handlers.setForward}><i className="bi bi-caret-right"></i></button>
                     </div>
                 </div>
             </>
