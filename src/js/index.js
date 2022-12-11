@@ -6,7 +6,7 @@ import ReactDOM from "react-dom";
 import "../styles/index.css";
 
 //import your own components
-import Home from "./component/home.jsx";
+import Counter from "./component/counter.jsx"
 
 //render your react application
 
@@ -26,7 +26,8 @@ const handlers = {
     data.direction = 1;
     data.alert = false;
     data.alertTime = 0;
-    data.countdown = 10;
+    data.countdownStartTime = 0;
+    data.countdown = false
     render();
     start()
   },
@@ -42,14 +43,14 @@ const handlers = {
   },
 
   setCountdown(event) {
-    data.countdown = event.target.value;
+    data.countdownStartTime = event.target.value;
   },
 
   startCountdown() {
-    data.count = parseInt(data.countdown)+1;
+    data.count = parseInt(data.countdownStartTime)+1;
     data.direction = -1;
-    data.alertTime = 0;
-    data.alert = true;
+    data.alert = false;
+    data.countdown = true;
     start()
   },
 
@@ -58,6 +59,7 @@ const handlers = {
   },
 
   alert() {
+    data.countdown = false
     data.alert = data.alert ? false : true;
     render();
   },
@@ -75,7 +77,7 @@ const handlers = {
 
 function render() {
   ReactDOM.render(
-    <Home handlers={handlers} data={data} />,
+    <Counter handlers={handlers} data={data} />,
     document.querySelector("#app")
   );
 }
@@ -89,8 +91,17 @@ function count() {
     handlers.toggleCounting();
     data.alert = false;
     window.alert("Alarm! " + data.count + " Time Reached");
+    render()
+  }
+
+  if (data.count == 0 && data.countdown) {
+    handlers.toggleCounting();
+    data.countdown = false;
+    window.alert("Countdown Finalized");
+    render()
   }
 }
+
 function start() {
   clearInterval(intervalId);
   intervalId = setInterval(count, 1000);
